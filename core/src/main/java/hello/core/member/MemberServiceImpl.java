@@ -1,9 +1,14 @@
 package hello.core.member;
 
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
+
+@Component
 public class MemberServiceImpl implements MemberService {
   private final MemberRepository memberRepository; // 그냥 인터페이스만 가지면 nullpoint exception
 
   // 완전히 추상화에만 의존하게 됨.
+  @Autowired
   public MemberServiceImpl(MemberRepository memberRepository) {
     this.memberRepository = memberRepository;
   }
