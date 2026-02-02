@@ -20,24 +20,60 @@ import org.springframework.stereotype.Component;
 //}
 @Component
 public class OrderServiceImpl implements OrderService {
-  private final MemberRepository mm;
-  private DiscountPolicy dd;
+
+  // 1. 생성자 주입 방법
+  private final MemberRepository memberRepository;
+  private final DiscountPolicy discountPolicy;
 
   @Autowired
   public OrderServiceImpl(MemberRepository memberRepository, DiscountPolicy discountPolicy) {
-    this.mm = memberRepository;
-    this.dd = discountPolicy;
+//    System.out.println("1. OrderServiceImpl.OrderServiceImpl");
+    this.memberRepository = memberRepository;
+    this.discountPolicy = discountPolicy;
   }
+
+  // 2. 수정자 주입 방법
+  /*private MemberRepository memberRepository;
+  private DiscountPolicy discountPolicy;
+
+  @Autowired
+  public void setDiscountPolicy(DiscountPolicy discountPolicy) {
+    System.out.println("discountPolicy = " + discountPolicy);
+    this.discountPolicy = discountPolicy;
+  }
+
+  @Autowired
+  public void setMemberRepository(MemberRepository memberRepository) {
+    System.out.println("memberRepository = " + memberRepository);
+    this.memberRepository = memberRepository;
+  }*/
 
   @Override
   public Order createOrder(Long memberId, String itemName, int itemPrice) {
-    Member member = mm.findById(memberId);
-    int amt = dd.discount(member, itemPrice); // member, price
+    Member member = memberRepository.findById(memberId);
+    int amt = discountPolicy.discount(member, itemPrice); // member, price
     return new Order(memberId, itemName, itemPrice, amt);
   }
 
   // 테스트 용도
   public MemberRepository getMemberRepository() {
-    return mm;
+    return memberRepository;
   }
+
+  // 4. 메서드 주입
+  /*private MemberRepository memberRepository;
+  private DiscountPolicy discountPolicy;
+
+  public OrderServiceImpl(MemberRepository memberRepository, DiscountPolicy discountPolicy) {
+    System.out.println("1. OrderServiceImpl.OrderServiceImpl");
+    this.memberRepository = memberRepository;
+    this.discountPolicy = discountPolicy;
+  }
+
+  @Autowired
+  public void init(MemberRepository memberRepository, DiscountPolicy discountPolicy) {
+    this.memberRepository = memberRepository;
+    this.discountPolicy = discountPolicy;
+  }*/
+
 }
