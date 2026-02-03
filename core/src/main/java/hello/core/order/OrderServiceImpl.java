@@ -3,7 +3,7 @@ package hello.core.order;
 import hello.core.discount.DiscountPolicy;
 import hello.core.member.Member;
 import hello.core.member.MemberRepository;
-import org.springframework.beans.factory.annotation.Autowired;
+import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
 
 //public class OrderServiceImpl implements OrderService{
@@ -19,18 +19,19 @@ import org.springframework.stereotype.Component;
 //    }
 //}
 @Component
+@RequiredArgsConstructor // 생성자 주입 방법 쓸 필요 없음.
 public class OrderServiceImpl implements OrderService {
 
   // 1. 생성자 주입 방법
   private final MemberRepository memberRepository;
   private final DiscountPolicy discountPolicy;
 
-  @Autowired
-  public OrderServiceImpl(MemberRepository memberRepository, DiscountPolicy discountPolicy) {
+  //  @Autowired // 생성자 1개일 경우 생략 가능
+  /*public OrderServiceImpl(MemberRepository memberRepository, DiscountPolicy discountPolicy) {
 //    System.out.println("1. OrderServiceImpl.OrderServiceImpl");
     this.memberRepository = memberRepository;
     this.discountPolicy = discountPolicy;
-  }
+  }*/
 
   // 2. 수정자 주입 방법
   /*private MemberRepository memberRepository;
