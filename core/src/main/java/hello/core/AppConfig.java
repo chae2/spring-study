@@ -31,6 +31,7 @@ public class AppConfig {
   public OrderService orderService() {
     System.out.println("call AppConfig.orderService()");
     return new OrderServiceImpl(memberRepository(), discountPolicy());
+//    return null; // 의존관계 주입 중 [4. 필드 주입] 실습 시 이 설정 필요.
   }
 
   @Bean
