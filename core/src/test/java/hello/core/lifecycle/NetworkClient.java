@@ -1,5 +1,8 @@
 package hello.core.lifecycle;
 
+import jakarta.annotation.PostConstruct;
+import jakarta.annotation.PreDestroy;
+
 public class NetworkClient { // implements InitializingBean, DisposableBean {
   private String url;
 
@@ -27,12 +30,15 @@ public class NetworkClient { // implements InitializingBean, DisposableBean {
     System.out.println("close: " + url);
   }
 
+  // 빈 생명주기 콜백 2. 빈 옵션 사용
+  @PostConstruct // 빈 생명주기 콜백 3. 어노테이션 사용
   public void init() { // 의존관계 주입 후에 진행됨
     System.out.println("NetworkClient#init");
     connect();
     call("초기화 연결 메시지");
   }
 
+  @PreDestroy // 빈 생명주기 콜백 3. 어노테이션 사용
   public void close() {
     System.out.println("NetworkClient#close");
     disconnect();
