@@ -37,6 +37,12 @@ dependencies {
 
     testImplementation 'org.springframework.boot:spring-boot-starter-test'
     testRuntimeOnly 'org.junit.platform:junit-platform-launcher'
+
+    // 빈 스코프 - provider 추가
+    implementation 'jakarta.inject:jakarta.inject-api:2.0.1'
+
+    // 빈 스코프 - web 라이브러리 추가
+    implementation 'org.springframework.boot:spring-boot-starter-web'
 }
 
 tasks.named('test') {
