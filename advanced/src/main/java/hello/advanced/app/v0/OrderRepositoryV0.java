@@ -1,4 +1,4 @@
-package hello.advanced.v0;
+package hello.advanced.app.v0;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Repository;
@@ -6,9 +6,10 @@ import org.springframework.stereotype.Repository;
 @Repository
 @RequiredArgsConstructor
 public class OrderRepositoryV0 {
-  public void save(String itemId){
+
+  public void save(String itemId) {
     // 저장로직
-    if (itemId.equals("ex")){
+    if (itemId.equals("ex")) {
       throw new IllegalStateException("예외 발생!");
     }
 
@@ -18,8 +19,7 @@ public class OrderRepositoryV0 {
   private void sleep(int millis) {
     try {
       Thread.sleep(millis);
-    }
-    catch (InterruptedException e) {
+    } catch (InterruptedException e) {
       e.printStackTrace();
     }
   }
