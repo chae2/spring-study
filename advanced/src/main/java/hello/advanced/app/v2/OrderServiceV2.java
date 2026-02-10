@@ -1,23 +1,24 @@
 package hello.advanced.app.v2;
 
+import hello.advanced.trace.TraceId;
 import hello.advanced.trace.TraceStatus;
-import hello.advanced.trace.logtrace.LogTrace;
+import hello.advanced.trace.helloTrace.HelloTraceV2;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 @Service
 @RequiredArgsConstructor
-public class OrderServiceV3 {
+public class OrderServiceV2 {
 
-    private final OrderRepositoryV3 orderRepository;
-    private final LogTrace trace;
+    private final OrderRepositoryV2 orderRepository;
+    private final HelloTraceV2 trace;
 
-    public void orderItem(String itemId) {
+    public void orderItem(TraceId traceId, String itemId) {
         TraceStatus status = null; // try 안에 넣을 수 없음..
         try {
-            status = trace.begin("OrderService.orderItem()");
+            status = trace.beginSync(traceId, "OrderService.orderItem()");
             // 핵심 로직
-            orderRepository.save(itemId);
+            orderRepository.save(status.getTraceId(), itemId);
 
             trace.end(status);
         } catch (Exception e) {
