@@ -6,19 +6,20 @@ import org.junit.jupiter.api.Test;
 
 @Slf4j
 public class FieldServiceTest {
-    private FieldService fieldService = new FieldService();
 
-    @Test
-    void field() {
-        log.info("main start");
-        Runnable userA = () -> {
-            fieldService.logic("userA");
-        };
-        Runnable userB = () -> {
-            fieldService.logic("userB");
-        };
+  private FieldService fieldService = new FieldService();
 
-        // 아래처럼 new Runnable로 만들 수 있지만 위처럼 간단히 람다로 표현.
+  @Test
+  void field() {
+    log.info("main start");
+    Runnable userA = () -> {
+      fieldService.logic("userA");
+    };
+    Runnable userB = () -> {
+      fieldService.logic("userB");
+    };
+
+    // 아래처럼 new Runnable로 만들 수 있지만 위처럼 간단히 람다로 표현.
         /*Runnable userA = new Runnable() {
             @Override
             public void run() {
@@ -26,25 +27,25 @@ public class FieldServiceTest {
             }
         };*/
 
-        Thread threadA = new Thread(userA);
-        threadA.setName("thread-A");
-        Thread threadB = new Thread(userB);
-        threadB.setName("thread-B");
+    Thread threadA = new Thread(userA);
+    threadA.setName("thread-A");
+    Thread threadB = new Thread(userB);
+    threadB.setName("thread-B");
 
-        threadA.start();
+    threadA.start();
 //        sleep(2000); // 동시성 문제 발생 X
-        sleep(100); // 동시성 문제 발생 O
-        threadB.start();
+    sleep(100); // 동시성 문제 발생 O
+    threadB.start();
 
-        sleep(3000); // 메인 쓰레드 종료 대기
-        log.info("main exit");
-    }
+    sleep(3000); // 메인 쓰레드 종료 대기
+    log.info("main exit");
+  }
 
-    private void sleep(int millis) {
-        try {
-            Thread.sleep(millis);
-        } catch (InterruptedException e) {
-            e.printStackTrace();
-        }
+  private void sleep(int millis) {
+    try {
+      Thread.sleep(millis);
+    } catch (InterruptedException e) {
+      e.printStackTrace();
     }
+  }
 }

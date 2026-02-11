@@ -3,9 +3,10 @@ package hello.advanced.trace.logtrace;
 import hello.advanced.trace.TraceStatus;
 
 public interface LogTrace {
-    TraceStatus begin(String message);
 
-    void end(TraceStatus status);
+  TraceStatus begin(String message);
 
-    void exception(TraceStatus status, Exception e);
+  void end(TraceStatus status);
+
+  void exception(TraceStatus status, Exception e);
 }
