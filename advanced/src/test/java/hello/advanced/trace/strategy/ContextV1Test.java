@@ -1,6 +1,7 @@
 package hello.advanced.trace.strategy;
 
 import hello.advanced.trace.strategy.code.strategy.ContextV1;
+import hello.advanced.trace.strategy.code.strategy.Strategy;
 import hello.advanced.trace.strategy.code.strategy.StrategyLogic1;
 import hello.advanced.trace.strategy.code.strategy.StrategyLogic2;
 import lombok.extern.slf4j.Slf4j;
@@ -47,5 +48,39 @@ public class ContextV1Test {
     StrategyLogic2 s2 = new StrategyLogic2();
     ContextV1 context2 = new ContextV1(s2);
     context2.execute();
+  }
+
+  // 익명 내부 클래스 구현
+  @Test
+  void strategyV2() {
+    Strategy strategy = new Strategy() {
+      @Override
+      public void call() {
+        log.info("익명 내부 클래스 - 로직 1");
+      }
+    };
+    // 위의 익명내부 클래스를 인라인으로 합침
+    ContextV1 contextV1 = new ContextV1(strategy);
+    log.info("strategyL logic1 = {}", strategy.getClass());
+    contextV1.execute();
+  }
+
+  @Test
+  void strategyV3() {
+    // 위의 익명내부 클래스를 인라인으로 합침
+    ContextV1 contextV1 = new ContextV1(new Strategy() {
+      @Override
+      public void call() {
+        log.info("익명 내부 클래스 - 로직 1");
+      }
+    });
+    contextV1.execute();
+  }
+
+  // 람다 사용
+  @Test
+  void strategyV4() {
+    ContextV1 contextV1 = new ContextV1(() -> log.info("람다로 비즈니스로직1 실행"));
+    contextV1.execute();
   }
 }
