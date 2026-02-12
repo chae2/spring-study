@@ -59,7 +59,6 @@ public class ContextV1Test {
         log.info("익명 내부 클래스 - 로직 1");
       }
     };
-    // 위의 익명내부 클래스를 인라인으로 합침
     ContextV1 contextV1 = new ContextV1(strategy);
     log.info("strategyL logic1 = {}", strategy.getClass());
     contextV1.execute();
