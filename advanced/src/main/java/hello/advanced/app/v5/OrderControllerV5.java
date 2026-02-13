@@ -1,0 +1,32 @@
+package hello.advanced.app.v5;
+
+import hello.advanced.trace.callback.TraceCallback;
+import hello.advanced.trace.callback.TraceTemplate;
+import hello.advanced.trace.logtrace.LogTrace;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RestController;
+
+@RestController // Controller + ResponseBody
+public class OrderControllerV5 {
+
+  private final OrderServiceV5 orderService;
+  private final TraceTemplate traceTemplate;
+
+  public OrderControllerV5(OrderServiceV5 orderService, LogTrace logTrace) {
+    this.orderService = orderService;
+    this.traceTemplate = new TraceTemplate(logTrace);
+  }
+
+  @GetMapping("/v5/request")
+  public String request(String itemId) {
+
+    return traceTemplate.execute("OrderController.request()", new TraceCallback<>() {
+      @Override
+      public String call() {
+        // 핵심 로직
+        orderService.orderItem(itemId);
+        return "Let's fetch you " + itemId;
+      }
+    });
+  }
+}
